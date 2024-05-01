@@ -40,6 +40,16 @@
               };
             };
 
+            qcow = { lib, modulesPath, config, pkgs, ... }: {
+              system.build.qcow = lib.mkForce (import "${toString modulesPath}/../lib/make-disk-image.nix" {
+                inherit lib config pkgs;
+                name = node.vmName;
+                diskSize = "auto";
+                format = "qcow2";
+                partitionTableType = "hybrid";
+              });
+            };
+
             # Ova images
             virtualbox = { config, pkgs, lib, ... }: lib.mkForce {
               virtualbox = {
