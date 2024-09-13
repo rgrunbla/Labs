@@ -261,7 +261,7 @@ let
 
     boot.kernel.sysctl = {
       "net.ipv4.conf.all.forwarding" = true;
-      "net.ipv6.conf.all.forwarding" = true;
+      "net.ipv4.conf.all.arp_filter" = true;
       # By default, not automatically configure any IPv6 addresses.
       "net.ipv6.conf.all.accept_ra" = 0;
       "net.ipv6.conf.all.autoconf" = 0;
@@ -271,7 +271,7 @@ let
     i18n.defaultLocale = "fr_FR.UTF-8";
     console = {
       font = "Lat2-Terminus16";
-      keyMap = "fr-bepo";
+      keyMap = "fr";
     };
 
     networking.useNetworkd = true;
@@ -406,6 +406,8 @@ let
     };
 
     networking.firewall = {
+      allowPing = true;
+      logRefusedConnections = true;
       allowedTCPPorts = [ 80 ];
     };
   };
@@ -417,6 +419,8 @@ let
       firewall = {
         enable = true;
         # Allow traceroute
+        allowPing = true;
+        logRefusedConnections = true;
         allowedUDPPortRanges = [{
           from = 33434;
           to = 33525;
@@ -434,6 +438,8 @@ let
     };
     networking.firewall = {
       allowedTCPPorts = [ 8000 ];
+      allowPing = true;
+      logRefusedConnections = true;
     };
   };
   genBirdLgWebsiteConf = { node }: {
@@ -447,11 +453,15 @@ let
     };
     networking.firewall = {
       allowedTCPPorts = [ 5000 ];
+      allowPing = true;
+      logRefusedConnections = true;
     };
   };
 
   genBirdConf = { node }: {
     networking.firewall = {
+      allowPing = true;
+      logRefusedConnections = true;
       allowedTCPPorts = [ 179 ];
     };
 
@@ -636,5 +646,6 @@ let
       );
     };
   };
+
 in
 hostConfig
